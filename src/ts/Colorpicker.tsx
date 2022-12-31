@@ -1,17 +1,18 @@
-import { useState } from "react";
+import CopyToClipboard from "./CopyToClipboard";
 
-import Copy from "./Images/Copy";
+interface ColorPickerProps {
+  baseColor: string;
+  setBaseColor: Function;
+}
 
-function Colorpicker() {
-  const [selectedColor, setSelectedColor] = useState<string>("#000000");
-
+function ColorPicker({ baseColor, setBaseColor }: ColorPickerProps) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     let tempValue = e.target.value;
     if (tempValue.charAt(0) !== "#") {
       tempValue = "#" + e.target.value;
     }
-    setSelectedColor(tempValue);
+    setBaseColor(tempValue);
   }
 
   return (
@@ -22,7 +23,7 @@ function Colorpicker() {
       <input
         className="aspect-square h-full w-full"
         type="color"
-        value={selectedColor}
+        value={baseColor}
         onChange={handleChange}
       />
       <div className="flex items-center gap-1">
@@ -30,13 +31,13 @@ function Colorpicker() {
           id="color"
           type="text"
           className="h-8 w-full rounded border border-zinc-400 p-2 font-mono shadow-inner"
-          value={selectedColor}
+          value={baseColor}
           onChange={handleChange}
         />
-        <Copy className="h-8 w-8 fill-zinc-400" />
+        <CopyToClipboard value={baseColor} />
       </div>
     </div>
   );
 }
 
-export default Colorpicker;
+export default ColorPicker;

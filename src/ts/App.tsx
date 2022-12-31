@@ -1,7 +1,13 @@
-import Colorpicker from "./Colorpicker";
+import { useState } from "react";
+
+import ColorPicker from "./ColorPicker";
 import robotImg from "@assets/robot-alpha-header.png";
+
 const YEAR = new Date().getFullYear();
+
 function App() {
+  const [baseColor, setBaseColor] = useState<string>("#000000");
+
   return (
     <div className="container flex h-screen max-w-none flex-col">
       <header className="flex h-20 items-center justify-items-center bg-slate-500 pt-1">
@@ -18,7 +24,7 @@ function App() {
       </header>
       <main className="flex-grow p-4 text-slate-700">
         <h2>Hello.</h2>
-        <Colorpicker />
+        <ColorPicker baseColor={baseColor} setBaseColor={setBaseColor} />
       </main>
       <footer className="flex h-16 items-center bg-slate-100  px-4">
         <p className="w-full text-right text-slate-600">
