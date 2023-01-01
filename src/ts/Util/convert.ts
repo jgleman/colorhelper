@@ -21,3 +21,13 @@ export function convertHSLToHex(color: HSLColor): any {
   const temp = hslToRGB(color);
   return rgbToHex(temp);
 }
+
+export function hslToCSS(color: HSLColor): string {
+  const h1 = Math.round(color.h);
+  const s1 = Math.round(color.s * 100);
+  const l1 = Math.round(color.l * 100);
+
+  const hslAsCSS: string = `hsl(${h1}, ${s1}%, ${l1}%)`;
+
+  return hslAsCSS;
+}

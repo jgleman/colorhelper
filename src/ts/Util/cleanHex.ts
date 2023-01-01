@@ -19,7 +19,6 @@ export function cleanHex(color: string): HexColor {
         cleanHex.charAt(2),
         cleanHex.charAt(2),
       ].join("");
-      console.log({ fullColor });
     } else {
       fullColor = cleanHex;
     }
