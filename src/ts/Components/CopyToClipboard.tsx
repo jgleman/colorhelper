@@ -1,4 +1,4 @@
-import Clipboard from "./Images/Clipboard";
+import Clipboard from "@components/Images/Clipboard";
 
 interface CopyToClipboardProps {
   value: string;

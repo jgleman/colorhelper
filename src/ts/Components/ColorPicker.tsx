@@ -1,4 +1,4 @@
-import CopyToClipboard from "./CopyToClipboard";
+import CopyToClipboard from "@components/CopyToClipboard";
 
 interface ColorPickerProps {
   baseColor: string;

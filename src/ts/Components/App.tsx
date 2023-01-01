@@ -1,12 +1,17 @@
 import { useState } from "react";
 
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "@components/ColorPicker";
 import robotImg from "@assets/robot-alpha-header.png";
+import { convertHexToHSL, convertHSLToHex } from "@util";
 
 const YEAR = new Date().getFullYear();
 
 function App() {
   const [baseColor, setBaseColor] = useState<string>("#000000");
+
+  const hslColor = convertHexToHSL(baseColor);
+  console.log({ hslColor });
+  convertHSLToHex(hslColor);
 
   return (
     <div className="container flex h-screen max-w-none flex-col">
