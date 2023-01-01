@@ -1,5 +1,8 @@
 import { RGBColor, HSLColor } from "./types";
 
+// algorithm adapted from
+// https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
+
 export function hslToRGB(hslColor: HSLColor): RGBColor {
   const { h, s, l } = hslColor;
 

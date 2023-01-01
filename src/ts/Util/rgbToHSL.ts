@@ -1,5 +1,6 @@
 import { RGBColor, HSLColor } from "./types";
 
+// Adapted from https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
 export function rgbToHSL(rgbColor: RGBColor): HSLColor {
   const { r, g, b } = rgbColor;
 
@@ -16,8 +17,6 @@ export function rgbToHSL(rgbColor: RGBColor): HSLColor {
   const C = max - min;
 
   let h = 0;
-  let s = 0;
-  let l = 0;
 
   // various permutations of how to calculate HUE based on which color is
   // the highest value
