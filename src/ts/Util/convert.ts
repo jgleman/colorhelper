@@ -2,6 +2,7 @@ import { cleanHex } from "./cleanHex";
 import { rgbToHSL } from "./rgbToHSL";
 import { hslToRGB } from "./hslToRGB";
 import { hexToRGB } from "./hexToRGB";
+import { rgbToHex } from "./rgbToHex";
 import { HSLColor } from "./types";
 
 export function convertHexToHSL(color: string): any {
@@ -18,5 +19,5 @@ export function convertHexToRGB(color: string): any {
 
 export function convertHSLToHex(color: HSLColor): any {
   const temp = hslToRGB(color);
-  console.log(temp);
+  return rgbToHex(temp);
 }

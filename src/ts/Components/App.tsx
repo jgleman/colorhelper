@@ -11,7 +11,8 @@ function App() {
 
   const hslColor = convertHexToHSL(baseColor);
   console.log({ hslColor });
-  convertHSLToHex(hslColor);
+  const backToHex = convertHSLToHex(hslColor);
+  console.log({ backToHex });
 
   return (
     <div className="container flex h-screen max-w-none flex-col">
@@ -29,7 +30,15 @@ function App() {
       </header>
       <main className="flex-grow p-4 text-slate-700">
         <h2>Hello.</h2>
-        <ColorPicker baseColor={baseColor} setBaseColor={setBaseColor} />
+        <div className="flex gap-4">
+          <ColorPicker
+            id="baseColor"
+            baseColor={baseColor}
+            setBaseColor={setBaseColor}
+          />
+
+          <ColorPicker id="convertedColor" baseColor={backToHex} />
+        </div>
       </main>
       <footer className="flex h-16 items-center bg-slate-100  px-4">
         <p className="w-full text-right text-slate-600">
