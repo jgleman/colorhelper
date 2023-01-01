@@ -1,14 +1,21 @@
 import { useState } from "react";
 
+import Header from "@components/Header";
+import Footer from "@components/Footer";
 import ColorPicker from "@components/ColorPicker";
 import ColorSwatch from "@components/ColorSwatch";
-import robotImg from "@assets/robot-alpha-header.png";
-import { convertHexToHSL, convertHSLToHex, hslToCSS } from "@util";
 
-const YEAR = new Date().getFullYear();
+import {
+  convertHexToHSL,
+  convertHSLToHex,
+  hslToCSS,
+  isHexColorValid,
+} from "@util";
 
 function App() {
-  const [baseColor, setBaseColor] = useState<string>("#000000");
+  const [baseColor, setBaseColor] = useState<string>("#336699");
+
+  const validColor = isHexColorValid(baseColor);
 
   const hslColor = convertHexToHSL(baseColor);
   const hslAsString = hslToCSS(hslColor);
@@ -16,36 +23,26 @@ function App() {
 
   return (
     <div className="container flex h-screen max-w-none flex-col">
-      <header className="flex h-20 items-center justify-items-center bg-slate-500 pt-1">
-        <img
-          className="h-full w-auto"
-          src={robotImg}
-          width="100"
-          height="100"
-          alt=""
-        />
-        <h1 className="my-auto ml-3 text-5xl font-normal leading-10 tracking-tight text-slate-50">
-          Color Helper
-        </h1>
-      </header>
+      <Header />
       <main className="flex-grow p-4 text-slate-700">
-        <h2>Hello.</h2>
-        <div className="flex gap-4">
+        <h2 className="mb-4 text-xl">Enter a color:</h2>
+        <div className="mb-4 flex">
           <ColorPicker
             id="baseColor"
+            label="Base Color"
             baseColor={baseColor}
             setBaseColor={setBaseColor}
           />
-
-          <ColorPicker id="convertedColor" baseColor={backToHex} />
-          <ColorSwatch color={hslAsString} />
+        </div>
+        <div className="flex gap-4">
+          <ColorPicker
+            id="convertedColor"
+            baseColor={validColor ? backToHex : ""}
+          />
+          <ColorSwatch color={validColor ? hslAsString : ""} />
         </div>
       </main>
-      <footer className="flex h-16 items-center bg-slate-100  px-4">
-        <p className="w-full text-right text-slate-600">
-          &copy; {YEAR} Jason Gleman
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }
