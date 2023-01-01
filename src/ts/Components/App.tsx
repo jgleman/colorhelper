@@ -1,12 +1,18 @@
 import { useState } from "react";
 
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "@components/ColorPicker";
 import robotImg from "@assets/robot-alpha-header.png";
+import { convertHexToHSL, convertHSLToHex } from "@util";
 
 const YEAR = new Date().getFullYear();
 
 function App() {
   const [baseColor, setBaseColor] = useState<string>("#000000");
+
+  const hslColor = convertHexToHSL(baseColor);
+  console.log({ hslColor });
+  const backToHex = convertHSLToHex(hslColor);
+  console.log({ backToHex });
 
   return (
     <div className="container flex h-screen max-w-none flex-col">
@@ -24,7 +30,15 @@ function App() {
       </header>
       <main className="flex-grow p-4 text-slate-700">
         <h2>Hello.</h2>
-        <ColorPicker baseColor={baseColor} setBaseColor={setBaseColor} />
+        <div className="flex gap-4">
+          <ColorPicker
+            id="baseColor"
+            baseColor={baseColor}
+            setBaseColor={setBaseColor}
+          />
+
+          <ColorPicker id="convertedColor" baseColor={backToHex} />
+        </div>
       </main>
       <footer className="flex h-16 items-center bg-slate-100  px-4">
         <p className="w-full text-right text-slate-600">
