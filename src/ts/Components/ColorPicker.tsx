@@ -19,21 +19,23 @@ function ColorPicker({ id, baseColor, setBaseColor }: ColorPickerProps) {
   }
 
   return (
-    <div className="justify-center-center flex w-44 flex-col gap-2 rounded border border-zinc-200 p-4">
+    <div className="justify-center-center flex flex-col gap-2 rounded border border-zinc-200 p-4">
       <label className="font-bold leading-none" htmlFor={id}>
         Color
       </label>
-      <input
-        className="aspect-square h-full w-full"
-        type="color"
-        value={baseColor}
-        disabled={typeof setBaseColor === "undefined"}
-        readOnly={typeof setBaseColor === "undefined"}
-        onChange={
-          typeof setBaseColor !== "undefined" ? handleChange : undefined
-        }
-      />
-      <div className="flex items-center gap-1">
+      <div className="aspect-square h-40 w-40 overflow-hidden rounded">
+        <input
+          className="h-full w-full cursor-pointer appearance-none border-0 p-0 disabled:cursor-default"
+          type="color"
+          value={baseColor}
+          disabled={typeof setBaseColor === "undefined"}
+          readOnly={typeof setBaseColor === "undefined"}
+          onChange={
+            typeof setBaseColor !== "undefined" ? handleChange : undefined
+          }
+        />
+      </div>
+      <div className="flex w-40 items-center gap-1">
         <input
           id={id}
           type="text"
