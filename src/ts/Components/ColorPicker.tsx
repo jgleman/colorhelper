@@ -5,6 +5,7 @@ interface ColorPickerProps {
   label?: string;
   baseColor: string;
   setBaseColor?: Function;
+  focusOnLoad?: Boolean;
 }
 
 function ColorPicker({
