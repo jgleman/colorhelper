@@ -32,6 +32,7 @@ function App() {
             label="Base Color"
             baseColor={baseColor}
             setBaseColor={setBaseColor}
+            focusOnLoad={true}
           />
         </div>
         <div className="flex gap-4">
