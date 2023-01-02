@@ -23,49 +23,56 @@ function App() {
   const validColor = isHexColorValid(baseColor);
 
   const hslColor = convertHexToHSL(baseColor);
-  const rgbColor = convertHexToRGB(baseColor);
 
-  const lighterColor: HSLColor = { ...hslColor };
-  const darkerColor: HSLColor = { ...hslColor };
+  const lighterColorA: HSLColor = { ...hslColor };
+  const lighterColorB: HSLColor = { ...hslColor };
+  const darkerColorA: HSLColor = { ...hslColor };
+  const darkerColorB: HSLColor = { ...hslColor };
 
   if (validColor) {
-    lighterColor.l += 20 / 100;
-    let darker = darkerColor.l;
+    lighterColorA.l += 20 / 100;
+    lighterColorB.l += 10 / 100;
+    let darker = darkerColorA.l;
     darker -= 20 / 100;
-    darkerColor.l = Math.min(1, Math.max(0, darker));
+    darkerColorA.l = Math.min(1, Math.max(0, darker));
+    darker = darkerColorB.l;
+    darker -= 10 / 100;
+    darkerColorB.l = Math.min(1, Math.max(0, darker));
   }
-
-  const darkerAsRGB = convertHSLToRGB(darkerColor);
 
   return (
     <div className="container flex h-screen max-w-none flex-col">
       <Header />
       <main className="flex-grow p-4 text-slate-700">
-        <h2 className="mb-4 text-xl">Enter a color:</h2>
-        <div className="mb-4 flex">
+        <div className="mb-6 mt-2 flex">
           <ColorPicker
             id="baseColor"
-            label="Base Color"
+            label="Enter a Color"
             baseColor={baseColor}
             setBaseColor={setBaseColor}
             focusOnLoad={true}
           />
         </div>
-        <div className="flex gap-4">
+        <div className="flex justify-center gap-4">
           <ColorSwatch
             label="20% Lighter"
-            color={validColor ? convertHSLToHex(lighterColor) : ""}
+            color={validColor ? convertHSLToHex(lighterColorA) : ""}
+          />
+          <ColorSwatch
+            label="10% Lighter"
+            color={validColor ? convertHSLToHex(lighterColorB) : ""}
+          />
+          <ColorSwatch label="Base Color" color={validColor ? baseColor : ""} />
+          <ColorSwatch
+            label="10% Darker"
+            color={validColor ? convertHSLToHex(lighterColorB) : ""}
           />
           <ColorSwatch
             label="20% Darker"
-            color={validColor ? convertHSLToHex(darkerColor) : ""}
-          />
-          <ColorSwatch
-            label="20% Darker RGB"
-            color={validColor ? rgbToCSS(darkerAsRGB) : ""}
+            color={validColor ? convertHSLToHex(lighterColorA) : ""}
           />
         </div>
-        <div className="flex gap-4">
+        {/* <div className="flex gap-4">
           <ColorSwatch
             label="Verified Color"
             color={validColor ? convertHSLToHex(hslColor) : ""}
@@ -78,7 +85,7 @@ function App() {
             label="HSL Color"
             color={validColor ? hslToCSS(hslColor) : ""}
           />
-        </div>
+        </div> */}
       </main>
       <Footer />
     </div>
