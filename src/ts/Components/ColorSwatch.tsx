@@ -2,12 +2,13 @@ import CopyToClipboard from "@components/CopyToClipboard";
 
 interface ColorSwatchProps {
   color: string;
+  label?: string;
 }
 
-function ColorSwatch({ color }: ColorSwatchProps) {
+function ColorSwatch({ color, label = "Color" }: ColorSwatchProps) {
   return (
     <div className="justify-center-center flex flex-col gap-2">
-      <p className="m-2 font-bold leading-none">HSL Color</p>
+      <p className="m-2 font-bold leading-none">{label}</p>
       <div className="relative mx-2 mb-2 w-52">
         <input
           value={color}

@@ -8,9 +8,14 @@ import ColorSwatch from "@components/ColorSwatch";
 import {
   convertHexToHSL,
   convertHSLToHex,
+  convertHexToRGB,
+  convertHSLToRGB,
   hslToCSS,
+  rgbToCSS,
   isHexColorValid,
 } from "@util";
+
+import { HSLColor } from "@util/types";
 
 function App() {
   const [baseColor, setBaseColor] = useState<string>("#336699");
@@ -18,8 +23,19 @@ function App() {
   const validColor = isHexColorValid(baseColor);
 
   const hslColor = convertHexToHSL(baseColor);
-  const hslAsString = hslToCSS(hslColor);
-  const backToHex = convertHSLToHex(hslColor);
+  const rgbColor = convertHexToRGB(baseColor);
+
+  const lighterColor: HSLColor = { ...hslColor };
+  const darkerColor: HSLColor = { ...hslColor };
+
+  if (validColor) {
+    lighterColor.l += 20 / 100;
+    let darker = darkerColor.l;
+    darker -= 20 / 100;
+    darkerColor.l = Math.min(1, Math.max(0, darker));
+  }
+
+  const darkerAsRGB = convertHSLToRGB(darkerColor);
 
   return (
     <div className="container flex h-screen max-w-none flex-col">
@@ -36,11 +52,32 @@ function App() {
           />
         </div>
         <div className="flex gap-4">
-          <ColorPicker
-            id="convertedColor"
-            baseColor={validColor ? backToHex : ""}
+          <ColorSwatch
+            label="20% Lighter"
+            color={validColor ? convertHSLToHex(lighterColor) : ""}
           />
-          <ColorSwatch color={validColor ? hslAsString : ""} />
+          <ColorSwatch
+            label="20% Darker"
+            color={validColor ? convertHSLToHex(darkerColor) : ""}
+          />
+          <ColorSwatch
+            label="20% Darker RGB"
+            color={validColor ? rgbToCSS(darkerAsRGB) : ""}
+          />
+        </div>
+        <div className="flex gap-4">
+          <ColorSwatch
+            label="Verified Color"
+            color={validColor ? convertHSLToHex(hslColor) : ""}
+          />
+          <ColorSwatch
+            label="RGB Color"
+            color={validColor ? rgbToCSS(rgbColor) : ""}
+          />
+          <ColorSwatch
+            label="HSL Color"
+            color={validColor ? hslToCSS(hslColor) : ""}
+          />
         </div>
       </main>
       <Footer />
