@@ -2,11 +2,17 @@ import CopyToClipboard from "@components/CopyToClipboard";
 
 interface ColorPickerProps {
   id: string;
+  label?: string;
   baseColor: string;
   setBaseColor?: Function;
 }
 
-function ColorPicker({ id, baseColor, setBaseColor }: ColorPickerProps) {
+function ColorPicker({
+  id,
+  label = "Color",
+  baseColor,
+  setBaseColor,
+}: ColorPickerProps) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     let tempValue = e.target.value;
@@ -19,28 +25,37 @@ function ColorPicker({ id, baseColor, setBaseColor }: ColorPickerProps) {
   }
 
   return (
-    <div className="justify-center-center flex w-40 flex-col gap-2 rounded border border-zinc-200 p-4">
-      <label className="font-bold leading-none" htmlFor={id}>
-        Color
+    <div className="justify-center-center flex flex-col gap-2 border-zinc-200">
+      <label className="m-2 font-bold leading-none" htmlFor={id}>
+        {label}
       </label>
-      <input
-        className="aspect-square h-full w-full"
-        type="color"
-        value={baseColor}
-        onChange={handleChange}
-      />
-      <div className="flex items-center gap-1">
+
+      <div className="relative mx-2 mb-2 w-52">
         <input
           id={id}
           type="text"
-          className="h-8 w-full rounded border border-zinc-400 p-2 font-mono shadow-inner"
+          className="w-full border border-zinc-400 px-2 pt-52 font-mono text-sm leading-8 shadow-inner"
           value={baseColor}
           readOnly={typeof setBaseColor === "undefined"}
           onChange={
             typeof setBaseColor !== "undefined" ? handleChange : undefined
           }
         />
-        <CopyToClipboard value={baseColor} />
+        <div className="absolute top-0 aspect-square h-52 w-52 overflow-hidden">
+          <input
+            className="h-full w-full cursor-pointer appearance-none rounded-none border border-zinc-400 p-0 disabled:cursor-default"
+            type="color"
+            value={baseColor}
+            disabled={typeof setBaseColor === "undefined"}
+            readOnly={typeof setBaseColor === "undefined"}
+            onChange={
+              typeof setBaseColor !== "undefined" ? handleChange : undefined
+            }
+          />
+        </div>
+        <div className="absolute bottom-0 right-1 flex h-8 w-5 items-center">
+          <CopyToClipboard value={baseColor} />
+        </div>
       </div>
     </div>
   );

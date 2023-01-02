@@ -1,4 +1,4 @@
-import Clipboard from "@components/Images/Clipboard";
+import Duplicate from "@components/Images/Duplicate";
 
 interface CopyToClipboardProps {
   value: string;
@@ -22,12 +22,12 @@ function CopyToClipboard({ value }: CopyToClipboardProps) {
         e.preventDefault();
         copyToClipboard(value);
       }}
-      className="group h-8 w-8 rounded p-1 transition-all hover:bg-zinc-100 active:shadow-inner"
+      className="group h-5 w-5 rounded transition-all"
     >
       <span className="sr-only">Copy {value} to clipbaord</span>
-      <Clipboard
-        title={`Copy ${value} to clipbaord}`}
-        className="h-6 w-6 fill-zinc-400 transition-all group-hover:fill-blue-400"
+      <Duplicate
+        title={`Copy ${value} to clipbaord`}
+        className="h-4 w-4 stroke-zinc-400 transition-all group-hover:stroke-blue-400"
       />
     </button>
   );
