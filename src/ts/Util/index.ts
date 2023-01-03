@@ -1,3 +1,3 @@
-export * from "./convert";
+export * from "./darken";
+export * from "./lighten";
 export * from "./types";
-export * from "./isHexColorValid";

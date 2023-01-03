@@ -6,7 +6,6 @@ export function rgbToHex(rgbColor: RGBColor): HexColor {
   const bPart = Math.round(rgbColor.b).toString(16);
 
   const hexColor: HexColor = [
-    "#",
     rPart.length === 1 ? "0" + rPart : rPart,
     gPart.length === 1 ? "0" + gPart : gPart,
     bPart.length === 1 ? "0" + bPart : bPart,
