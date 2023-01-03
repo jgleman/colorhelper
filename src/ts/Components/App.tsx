@@ -5,40 +5,13 @@ import Footer from "@components/Footer";
 import ColorPicker from "@components/ColorPicker";
 import ColorSwatch from "@components/ColorSwatch";
 
-import {
-  convertHexToHSL,
-  convertHSLToHex,
-  convertHexToRGB,
-  convertHSLToRGB,
-  hslToCSS,
-  rgbToCSS,
-  isHexColorValid,
-} from "@util";
+import UColor from "@util/UColor";
 
-import { HSLColor } from "@util/types";
+import { lighten, darken } from "@util";
 
 function App() {
   const [baseColor, setBaseColor] = useState<string>("#336699");
-
-  const validColor = isHexColorValid(baseColor);
-
-  const hslColor = convertHexToHSL(baseColor);
-
-  const lighterColorA: HSLColor = { ...hslColor };
-  const lighterColorB: HSLColor = { ...hslColor };
-  const darkerColorA: HSLColor = { ...hslColor };
-  const darkerColorB: HSLColor = { ...hslColor };
-
-  if (validColor) {
-    lighterColorA.l += 20 / 100;
-    lighterColorB.l += 10 / 100;
-    let darker = darkerColorA.l;
-    darker -= 20 / 100;
-    darkerColorA.l = Math.min(1, Math.max(0, darker));
-    darker = darkerColorB.l;
-    darker -= 10 / 100;
-    darkerColorB.l = Math.min(1, Math.max(0, darker));
-  }
+  const color = new UColor(baseColor);
 
   return (
     <div className="container flex h-screen max-w-none flex-col">
@@ -56,36 +29,22 @@ function App() {
         <div className="flex justify-center gap-4">
           <ColorSwatch
             label="20% Lighter"
-            color={validColor ? convertHSLToHex(lighterColorA) : ""}
+            color={lighten(color, 20).hexToCSS()}
           />
           <ColorSwatch
             label="10% Lighter"
-            color={validColor ? convertHSLToHex(lighterColorB) : ""}
+            color={lighten(color, 10).hexToCSS()}
           />
-          <ColorSwatch label="Base Color" color={validColor ? baseColor : ""} />
+          <ColorSwatch label="Base Color" color={color.hexToCSS()} />
           <ColorSwatch
             label="10% Darker"
-            color={validColor ? convertHSLToHex(lighterColorB) : ""}
+            color={darken(color, 10).hexToCSS()}
           />
           <ColorSwatch
             label="20% Darker"
-            color={validColor ? convertHSLToHex(lighterColorA) : ""}
+            color={darken(color, 20).hexToCSS()}
           />
         </div>
-        {/* <div className="flex gap-4">
-          <ColorSwatch
-            label="Verified Color"
-            color={validColor ? convertHSLToHex(hslColor) : ""}
-          />
-          <ColorSwatch
-            label="RGB Color"
-            color={validColor ? rgbToCSS(rgbColor) : ""}
-          />
-          <ColorSwatch
-            label="HSL Color"
-            color={validColor ? hslToCSS(hslColor) : ""}
-          />
-        </div> */}
       </main>
       <Footer />
     </div>
