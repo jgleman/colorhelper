@@ -1,8 +1,12 @@
 import { HSLColor } from "./types";
-import UColor from "./UColor";
+import JColor from "./JColor";
 
-export function lighten(color: UColor, amount: number): UColor {
+export function darken(color: JColor, amount: number): JColor {
   const asHSL: HSLColor = { ...color.hsl };
-  asHSL.l += amount / 100;
-  return new UColor(asHSL);
+  asHSL.l -= amount / 100;
+  // can't be less than 0 luminence
+  if (asHSL.l < 0) {
+    asHSL.l = 0;
+  }
+  return new JColor(asHSL);
 }
