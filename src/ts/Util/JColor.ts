@@ -6,13 +6,13 @@ import { hslToRGB } from "./hslToRGB";
 
 const HEX_REGEX = /([a-fA-F0-9]{6})/g;
 
-export interface Color {
+export interface ColorType {
   hex: HexColor;
   rgb: RGBColor;
   hsl: HSLColor;
 }
 
-class UColor implements Color {
+class JColor implements ColorType {
   hex!: HexColor;
   rgb!: RGBColor;
   hsl!: HSLColor;
@@ -39,6 +39,10 @@ class UColor implements Color {
       this.rgb = color;
       this.hsl = rgbToHSL(this.rgb);
       this.hex = rgbToHex(this.rgb);
+    } else {
+      this.hex = "000000";
+      this.rgb = hexToRGB(this.hex);
+      this.hsl = rgbToHSL(this.rgb);
     }
   }
 
@@ -75,4 +79,4 @@ class UColor implements Color {
   }
 }
 
-export default UColor;
+export default JColor;

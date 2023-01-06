@@ -15,8 +15,9 @@ function ColorPicker({
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     let tempValue = e.target.value;
-    if (tempValue.charAt(0) !== "#") {
-      tempValue = "#" + e.target.value;
+
+    if (tempValue.charAt(0) === "#") {
+      tempValue = tempValue.split("#")[1];
     }
     if (setBaseColor) {
       setBaseColor(tempValue);
@@ -26,12 +27,14 @@ function ColorPicker({
   return (
     <div className="flex w-full justify-center justify-center border-zinc-200">
       <div>
-        <label className="text-sm uppercase text-zinc-700" htmlFor={id}>
+        <label className="sr-only" htmlFor={id}>
           {label}
         </label>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <p className="text-xl text-zinc-500">#</p>
           <input
             id={id}
+            placeholder="Enter a color..."
             type="text"
             className="h-10 w-72 rounded border border-zinc-200 p-2 font-mono shadow-inner"
             value={baseColor}
@@ -44,7 +47,7 @@ function ColorPicker({
             <input
               className="h-10 w-10 cursor-pointer appearance-none disabled:cursor-default"
               type="color"
-              value={baseColor}
+              value={`#${baseColor}`}
               disabled={typeof setBaseColor === "undefined"}
               readOnly={typeof setBaseColor === "undefined"}
               onChange={
