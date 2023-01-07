@@ -11,7 +11,7 @@ function Header() {
         alt=""
       />
       <h1 className="my-auto ml-3 text-5xl font-normal leading-10 tracking-tight text-slate-50">
-        Color Helper
+        ColorWhiz
       </h1>
     </header>
   );

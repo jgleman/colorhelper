@@ -24,15 +24,15 @@ function generateMinis(color: JColor): { color: JColor; percent: number }[] {
 
 function getLabel(percent: number): string {
   if (percent > 0) {
-    return Math.abs(percent).toString() + "% Darker";
-  } else if (percent < 0) {
     return Math.abs(percent).toString() + "% Lighter";
+  } else if (percent < 0) {
+    return Math.abs(percent).toString() + "% Darker";
   }
   return "Base Color";
 }
 
 function App() {
-  const [baseColor, setBaseColor] = useState<string>("336699");
+  const [baseColor, setBaseColor] = useState<string>("#336699");
 
   const color = new JColor(baseColor);
 
@@ -42,6 +42,10 @@ function App() {
   const [foregroundColor, setForegroundColor] = useState<number>(
     miniSelections.length - 1
   );
+  const [onHoverColor, setOnHoverColor] = useState<number>(
+    miniSelections.length - 1
+  );
+  const [onHoverTextColor, setOnHoverTextColor] = useState<number>(0);
 
   const backgroundColorValue =
     typeof backgroundColor === "number"
@@ -50,6 +54,12 @@ function App() {
   const foregroundColorValue =
     typeof foregroundColor === "number"
       ? miniSelections[foregroundColor]
+      : undefined;
+  const onHoverColorValue =
+    typeof onHoverColor === "number" ? miniSelections[onHoverColor] : undefined;
+  const onHoverTextColorValue =
+    typeof onHoverTextColor === "number"
+      ? miniSelections[onHoverTextColor]
       : undefined;
 
   let contrastRatio = "";
@@ -72,6 +82,7 @@ function App() {
             id="baseColor"
             label="Enter a Color"
             baseColor={baseColor}
+            color={color}
             setBaseColor={setBaseColor}
             focusOnLoad={true}
           />
@@ -126,12 +137,48 @@ function App() {
                   </td>
                 ))}
               </tr>
+              <tr>
+                <td className="border p-1 px-2">On Hover Color</td>
+                {miniSelections.map((m, i) => (
+                  <td className="border text-center" key={i}>
+                    <label className="sr-only">
+                      Select {m.color.hexToCSS()}
+                    </label>
+                    <input
+                      type="checkbox"
+                      value={i}
+                      checked={onHoverColor === i}
+                      onChange={() => {
+                        setOnHoverColor(i);
+                      }}
+                    />
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="border p-1 px-2">On Hover Text Color</td>
+                {miniSelections.map((m, i) => (
+                  <td className="border text-center" key={i}>
+                    <label className="sr-only">
+                      Select {m.color.hexToCSS()}
+                    </label>
+                    <input
+                      type="checkbox"
+                      value={i}
+                      checked={onHoverTextColor === i}
+                      onChange={() => {
+                        setOnHoverTextColor(i);
+                      }}
+                    />
+                  </td>
+                ))}
+              </tr>
             </tbody>
           </table>
         </div>
         <div className="flex justify-center">
           <div
-            className="flex h-20 w-1/2 items-center justify-center"
+            className="flex h-20 w-1/2 items-center justify-between pl-4"
             style={{
               background: color.hexToCSS(),
             }}
@@ -144,12 +191,34 @@ function App() {
               style={{
                 background: backgroundColorValue
                   ? backgroundColorValue.color.hexToCSS()
-                  : "#dddddd  ",
+                  : "#dddddd",
                 color: foregroundColorValue
                   ? foregroundColorValue.color.hexToCSS()
-                  : "#111111  ",
+                  : "#111111",
               }}
             />
+            <div
+              className="flex h-full w-fit items-center px-6"
+              style={{
+                background: onHoverColorValue
+                  ? onHoverColorValue.color.hexToCSS()
+                  : "#dddddd",
+                color: foregroundColorValue
+                  ? foregroundColorValue.color.hexToCSS()
+                  : "#111111",
+              }}
+            >
+              <p
+                className="leading-none"
+                style={{
+                  color: onHoverTextColorValue
+                    ? onHoverTextColorValue.color.hexToCSS()
+                    : "#111111",
+                }}
+              >
+                Test Hover State
+              </p>
+            </div>
           </div>
         </div>
         <p className="my-4 text-center">

@@ -4,6 +4,8 @@ import { rgbToHSL } from "./rgbToHSL";
 import { rgbToHex } from "./rgbToHex";
 import { hslToRGB } from "./hslToRGB";
 
+import { parseHSL } from "./parseHSL";
+
 const HEX_REGEX = /([a-fA-F0-9]{6})/g;
 
 export interface ColorType {
@@ -18,17 +20,23 @@ class JColor implements ColorType {
   hsl!: HSLColor;
 
   constructor(color: any) {
-    if (typeof color === "string" && color.charAt(0) === "#") {
-      // is input a string
-      const hexColor = color.split("#")[1] || "";
-      this.hex = hexColor;
-      this.rgb = hexToRGB(hexColor);
-      this.hsl = rgbToHSL(this.rgb);
-    } else if (typeof color === "string" && color.length === 6) {
-      // is input a HexColor
-      this.hex = color;
-      this.rgb = hexToRGB(color);
-      this.hsl = rgbToHSL(this.rgb);
+    if (typeof color === "string") {
+      if (color.charAt(0) === "#") {
+        // is input a string
+        const hexColor = color.split("#")[1] || "";
+        this.hex = hexColor;
+        this.rgb = hexToRGB(hexColor);
+        this.hsl = rgbToHSL(this.rgb);
+      } else if (typeof color === "string" && color.length === 6) {
+        // is input a HexColor
+        this.hex = color;
+        this.rgb = hexToRGB(color);
+        this.hsl = rgbToHSL(this.rgb);
+      } else if (color.startsWith("hsl(") || color.startsWith("hsla(")) {
+        this.hsl = parseHSL(color);
+        this.rgb = hslToRGB(this.hsl);
+        this.hex = rgbToHex(this.rgb);
+      }
     } else if (typeof color.h !== "undefined") {
       // is input a HSLColor
       this.hsl = color;
@@ -57,7 +65,7 @@ class JColor implements ColorType {
     const g1 = Math.round(this.rgb.g);
     const b1 = Math.round(this.rgb.b);
 
-    const rgbAsCSS: string = `rgb(${r1}, ${g1}, ${b1})`;
+    const rgbAsCSS: string = `rgb(${r1} ${g1} ${b1})`;
 
     return rgbAsCSS;
   }
@@ -69,13 +77,13 @@ class JColor implements ColorType {
     const s1 = Math.round(this.hsl.s * 100);
     const l1 = Math.round(this.hsl.l * 100);
 
-    const hslAsCSS: string = `hsl(${h1}, ${s1}%, ${l1}%)`;
+    const hslAsCSS: string = `hsl(${h1} ${s1}% ${l1}%)`;
 
     return hslAsCSS;
   }
 
   isValid() {
-    return this.hex.match(HEX_REGEX) ? true : false;
+    return this.hex?.match(HEX_REGEX) ? true : false || false;
   }
 }
 

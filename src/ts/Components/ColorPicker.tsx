@@ -1,7 +1,9 @@
+import JColor from "@util/JColor";
 interface ColorPickerProps {
   id: string;
   label?: string;
   baseColor: string;
+  color: JColor;
   setBaseColor?: Function;
   focusOnLoad?: Boolean;
 }
@@ -10,15 +12,13 @@ function ColorPicker({
   id,
   label = "Color",
   baseColor,
+  color,
   setBaseColor,
 }: ColorPickerProps) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     let tempValue = e.target.value;
 
-    if (tempValue.charAt(0) === "#") {
-      tempValue = tempValue.split("#")[1];
-    }
     if (setBaseColor) {
       setBaseColor(tempValue);
     }
@@ -31,7 +31,6 @@ function ColorPicker({
           {label}
         </label>
         <div className="flex items-center gap-2">
-          <p className="text-xl text-zinc-500">#</p>
           <input
             id={id}
             placeholder="Enter a color..."
@@ -47,7 +46,7 @@ function ColorPicker({
             <input
               className="h-10 w-10 cursor-pointer appearance-none disabled:cursor-default"
               type="color"
-              value={`#${baseColor}`}
+              value={color.hexToCSS()}
               disabled={typeof setBaseColor === "undefined"}
               readOnly={typeof setBaseColor === "undefined"}
               onChange={
