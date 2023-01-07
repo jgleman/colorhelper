@@ -6,11 +6,11 @@ import ColorPicker from "@components/ColorPicker";
 import ColorSwatch from "@components/ColorSwatch";
 import ColorSwatchMini from "@components/ColorSwatchMini";
 
-import JColor from "@util/JColor";
+import Color from "@util/Color";
 
-import { lighten, darken, contrast } from "@util";
+import { lighten, darken, contrast, hexString } from "@util";
 
-function generateMinis(color: JColor): { color: JColor; percent: number }[] {
+function generateMinis(color: Color): { color: Color; percent: number }[] {
   const minis = [];
   for (let i = 50; i > 0; i -= 5) {
     minis.push({ color: lighten(color, i), percent: i });
@@ -34,7 +34,7 @@ function getLabel(percent: number): string {
 function App() {
   const [baseColor, setBaseColor] = useState<string>("#336699");
 
-  const color = new JColor(baseColor);
+  const color = new Color(baseColor);
 
   const miniSelections = generateMinis(color);
 
@@ -106,7 +106,7 @@ function App() {
                 {miniSelections.map((m, i) => (
                   <td className="border text-center" key={i}>
                     <label className="sr-only">
-                      Select {m.color.hexToCSS()}
+                      Select {hexString(m.color)}
                     </label>
                     <input
                       type="checkbox"
@@ -124,7 +124,7 @@ function App() {
                 {miniSelections.map((m, i) => (
                   <td className="border text-center" key={i}>
                     <label className="sr-only">
-                      Select {m.color.hexToCSS()}
+                      Select {hexString(m.color)}
                     </label>
                     <input
                       type="checkbox"
@@ -142,7 +142,7 @@ function App() {
                 {miniSelections.map((m, i) => (
                   <td className="border text-center" key={i}>
                     <label className="sr-only">
-                      Select {m.color.hexToCSS()}
+                      Select {hexString(m.color)}
                     </label>
                     <input
                       type="checkbox"
@@ -160,7 +160,7 @@ function App() {
                 {miniSelections.map((m, i) => (
                   <td className="border text-center" key={i}>
                     <label className="sr-only">
-                      Select {m.color.hexToCSS()}
+                      Select {hexString(m.color)}
                     </label>
                     <input
                       type="checkbox"
@@ -180,7 +180,7 @@ function App() {
           <div
             className="flex h-20 w-1/2 items-center justify-between pl-4"
             style={{
-              background: color.hexToCSS(),
+              background: hexString(color),
             }}
           >
             <input
@@ -190,10 +190,10 @@ function App() {
               readOnly
               style={{
                 background: backgroundColorValue
-                  ? backgroundColorValue.color.hexToCSS()
+                  ? hexString(backgroundColorValue.color)
                   : "#dddddd",
                 color: foregroundColorValue
-                  ? foregroundColorValue.color.hexToCSS()
+                  ? hexString(foregroundColorValue.color)
                   : "#111111",
               }}
             />
@@ -201,10 +201,10 @@ function App() {
               className="flex h-full w-fit items-center px-6"
               style={{
                 background: onHoverColorValue
-                  ? onHoverColorValue.color.hexToCSS()
+                  ? hexString(onHoverColorValue.color)
                   : "#dddddd",
                 color: foregroundColorValue
-                  ? foregroundColorValue.color.hexToCSS()
+                  ? hexString(foregroundColorValue.color)
                   : "#111111",
               }}
             >
@@ -212,7 +212,7 @@ function App() {
                 className="leading-none"
                 style={{
                   color: onHoverTextColorValue
-                    ? onHoverTextColorValue.color.hexToCSS()
+                    ? hexString(onHoverTextColorValue.color)
                     : "#111111",
                 }}
               >

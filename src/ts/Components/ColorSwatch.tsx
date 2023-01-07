@@ -1,8 +1,10 @@
 import CopyToClipboard from "@components/CopyToClipboard";
-import JColor from "@util/JColor";
+import Color from "@util/Color";
+
+import { hexString, rgbString, hslString } from "@util";
 
 interface ColorSwatchProps {
-  color: JColor;
+  color: Color;
   label?: string;
 }
 
@@ -14,30 +16,30 @@ function ColorSwatch({ color, label = "Color" }: ColorSwatchProps) {
         <div className="">
           <div
             className="h-24 w-full overflow-hidden "
-            style={{ background: color.hexToCSS() }}
+            style={{ background: hexString(color) }}
           ></div>
           <div className="flex">
             <p className="w-full px-2 font-mono text-sm leading-8">
-              {color.hexToCSS()}
+              {hexString(color)}
             </p>
             <div className="mx-1 flex h-8 w-5 items-center">
-              <CopyToClipboard value={color.hexToCSS()} />
+              <CopyToClipboard value={hexString(color)} />
             </div>
           </div>
           <div className="flex">
             <p className="w-full px-2 font-mono text-xs leading-8">
-              {color.rgbToCSS()}
+              {rgbString(color)}
             </p>
             <div className="mx-1 flex h-8 w-5 items-center">
-              <CopyToClipboard value={color.rgbToCSS()} />
+              <CopyToClipboard value={rgbString(color)} />
             </div>
           </div>
           <div className="flex">
             <p className="w-full px-2 font-mono text-xs leading-8">
-              {color.hslToCSS()}
+              {hslString(color)}
             </p>
             <div className="mx-1 flex h-8 w-5 items-center">
-              <CopyToClipboard value={color.hslToCSS()} />
+              <CopyToClipboard value={hslString(color)} />
             </div>
           </div>
         </div>

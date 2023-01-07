@@ -1,7 +1,8 @@
-import JColor from "@util/JColor";
+import Color from "@util/Color";
+import { hexString } from "@util";
 
 interface ColorSwatchMiniProps {
-  color: JColor;
+  color: Color;
   label?: string;
 }
 
@@ -10,7 +11,7 @@ function ColorSwatchMini({ color, label }: ColorSwatchMiniProps) {
     <div className="flex flex-col justify-center text-center">
       <div
         className="h-7 w-7 rounded shadow"
-        style={{ background: color.hexToCSS() }}
+        style={{ background: hexString(color) }}
       ></div>
       <p className="text-xs">{label}</p>
     </div>

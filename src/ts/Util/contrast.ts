@@ -1,10 +1,10 @@
-import JColor from "./JColor";
+import Color from "./Color";
 
 import { relativeLuminence } from "./relativeLuminence";
 
 // implementation of:
 // http://www.w3.org/TR/WCAG20/#contrast-ratiodef
-export function contrast(color1: JColor, color2: JColor): string {
+export function contrast(color1: Color, color2: Color): string {
   let lum1 = relativeLuminence(color1.rgb);
   let lum2 = relativeLuminence(color2.rgb);
 
