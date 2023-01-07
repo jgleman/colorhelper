@@ -5,6 +5,7 @@ import { rgbToHex } from "./rgbToHex";
 import { hslToRGB } from "./hslToRGB";
 
 import { parseHSL } from "./parseHSL";
+import { parseRGB } from "./parseRGB";
 
 const HEX_REGEX = /([a-fA-F0-9]{6})/g;
 
@@ -35,6 +36,10 @@ class JColor implements ColorType {
       } else if (color.startsWith("hsl(") || color.startsWith("hsla(")) {
         this.hsl = parseHSL(color);
         this.rgb = hslToRGB(this.hsl);
+        this.hex = rgbToHex(this.rgb);
+      } else if (color.startsWith("rgb(") || color.startsWith("rgba(")) {
+        this.rgb = parseRGB(color);
+        this.hsl = rgbToHSL(this.rgb);
         this.hex = rgbToHex(this.rgb);
       }
     } else if (typeof color.h !== "undefined") {
