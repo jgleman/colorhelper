@@ -1,13 +1,10 @@
 import { HexColor, RGBColor, HSLColor } from "./types";
-import { hexToRGB } from "./hexToRGB";
-import { rgbToHSL } from "./rgbToHSL";
-import { rgbToHex } from "./rgbToHex";
-import { hslToRGB } from "./hslToRGB";
-
-import { parseHSL } from "./parseHSL";
-import { parseRGB } from "./parseRGB";
-
-const HEX_REGEX = /([a-fA-F0-9]{6})/g;
+import { hexToRGB } from "./internal/hexToRGB";
+import { rgbToHSL } from "./internal/rgbToHSL";
+import { rgbToHex } from "./internal/rgbToHex";
+import { hslToRGB } from "./internal/hslToRGB";
+import { parseHSL } from "./internal/parseHSL";
+import { parseRGB } from "./internal/parseRGB";
 
 export interface ColorType {
   hex: HexColor;
@@ -15,7 +12,7 @@ export interface ColorType {
   hsl: HSLColor;
 }
 
-class JColor implements ColorType {
+class Color implements ColorType {
   hex!: HexColor;
   rgb!: RGBColor;
   hsl!: HSLColor;
@@ -58,38 +55,6 @@ class JColor implements ColorType {
       this.hsl = rgbToHSL(this.rgb);
     }
   }
-
-  hexToCSS(): string {
-    return this.isValid() ? "#" + this.hex : "";
-  }
-
-  rgbToCSS(): string {
-    if (!this.isValid()) return "";
-
-    const r1 = Math.round(this.rgb.r);
-    const g1 = Math.round(this.rgb.g);
-    const b1 = Math.round(this.rgb.b);
-
-    const rgbAsCSS: string = `rgb(${r1} ${g1} ${b1})`;
-
-    return rgbAsCSS;
-  }
-
-  hslToCSS(): string {
-    if (!this.isValid()) return "";
-
-    const h1 = Math.round(this.hsl.h);
-    const s1 = Math.round(this.hsl.s * 100);
-    const l1 = Math.round(this.hsl.l * 100);
-
-    const hslAsCSS: string = `hsl(${h1} ${s1}% ${l1}%)`;
-
-    return hslAsCSS;
-  }
-
-  isValid() {
-    return this.hex?.match(HEX_REGEX) ? true : false || false;
-  }
 }
 
-export default JColor;
+export default Color;

@@ -1,9 +1,11 @@
-import JColor from "@util/JColor";
+import Color from "@util/Color";
+import { hexString } from "@util";
+
 interface ColorPickerProps {
   id: string;
   label?: string;
   baseColor: string;
-  color: JColor;
+  color: Color;
   setBaseColor?: Function;
   focusOnLoad?: Boolean;
 }
@@ -46,7 +48,7 @@ function ColorPicker({
             <input
               className="h-10 w-10 cursor-pointer appearance-none disabled:cursor-default"
               type="color"
-              value={color.hexToCSS()}
+              value={hexString(color)}
               disabled={typeof setBaseColor === "undefined"}
               readOnly={typeof setBaseColor === "undefined"}
               onChange={

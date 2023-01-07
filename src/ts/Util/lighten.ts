@@ -1,12 +1,12 @@
 import { HSLColor } from "./types";
-import JColor from "./JColor";
+import Color from "./Color";
 
-export function lighten(color: JColor, amount: number): JColor {
+export function lighten(color: Color, amount: number): Color {
   const asHSL: HSLColor = { ...color.hsl };
   asHSL.l += amount / 100;
-  // can't be more than 1 luminence
+  // can't be more than 1 luminance
   if (asHSL.l > 1) {
     asHSL.l = 1;
   }
-  return new JColor(asHSL);
+  return new Color(asHSL);
 }
